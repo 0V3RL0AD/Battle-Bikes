@@ -5,9 +5,15 @@ using Photon.Pun;
 
 public class PlayerController : MonoBehaviourPun
 {
+    public bool IsDead = false;
+
     private float turnSpeed = 150;
     private float tiltSpeed = 150;
     private float walkSpeed = 20;
+
+    public GameObject trail;
+    public GameObject cam1;
+    public GameObject cam2;
 
     [SerializeField]
     private Transform tpcam; //third person camera
@@ -21,6 +27,10 @@ public class PlayerController : MonoBehaviourPun
     void Start()
     {
         //Cursor.lockState = CursorLockMode.Confined;
+
+        cam1.SetActive(true);
+        cam2.SetActive(false);
+
 
         if (photonView.IsMine && tpcam != null)
         {
@@ -38,7 +48,8 @@ public class PlayerController : MonoBehaviourPun
     {
         if (col.gameObject.tag == "Track")
         {
-            transform.Translate(0, 1, 0);
+            IsDead = true;
+
         }
     }
     // Update is called once per frame
@@ -57,6 +68,19 @@ public class PlayerController : MonoBehaviourPun
             nick.transform.LookAt(Camera.current.transform);
             nick.transform.Rotate(0, 180, 0);
         }
+
+        if (IsDead == true)
+        {
+            walkSpeed = 0;
+            transform.position = new Vector3(0, -100, 0);
+
+
+
+            cam1.SetActive(false);
+            cam2.SetActive(true);
+
+        }
+
 
     }
 }

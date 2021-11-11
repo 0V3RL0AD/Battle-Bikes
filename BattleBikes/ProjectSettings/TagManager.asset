@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Track
+  - Death Camera
   layers:
   - Default
   - TransparentFX
