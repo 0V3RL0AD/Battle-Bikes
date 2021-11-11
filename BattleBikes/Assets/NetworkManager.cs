@@ -14,8 +14,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField]
     private InputField playerName;
     [SerializeField]
-    private byte maxPlayersPerRoom = 4;
+    private byte maxPlayersPerRoom = 8;
     public GameObject player;
+    public Camera main;
+    //public bool gameStarted;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,7 +59,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         playerName.gameObject.SetActive(false);
         buttonLeave.gameObject.SetActive(true);
         PhotonNetwork.Instantiate(player.name,
-             new Vector3(Random.Range(-15, 15), 1, Random.Range(-15, 15)),
+             new Vector3(Random.Range(-80, 80), 1, Random.Range(-80, 80)),
              Quaternion.Euler(0, Random.Range(-180, 180), 0)
              , 0);
     }
@@ -77,7 +80,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
         else if (PhotonNetwork.IsConnected)
         {
-            nickname.text = "Type your name below and hit PLAY!";
+            nickname.text = "Type your name and hit PLAY!";
             room.text = "Not yet in a room...";
             players.text = "Players: 0";
         }
@@ -90,11 +93,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PlayerPrefs.SetString("PlayerName", playerName.text);
         PhotonNetwork.NickName = playerName.text;
         PhotonNetwork.JoinRandomRoom();
-    }
+        main.gameObject.SetActive(false);
+        //gameStarted = true;
+}
 
     public void Leave()
     {
         PhotonNetwork.LeaveRoom();
+        //gameStarted = false;
+        main.gameObject.SetActive(true);
     }
 
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)

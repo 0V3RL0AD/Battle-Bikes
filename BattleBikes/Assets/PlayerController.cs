@@ -1,34 +1,62 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Photon.Pun;
 using UnityEngine;
+using Photon.Pun;
+
 public class PlayerController : MonoBehaviourPun
 {
-    public float turnSpeed = 180;
-    public float tiltSpeed = 180;
-    public float walkSpeed = 1;
+    private float turnSpeed = 150;
+    private float tiltSpeed = 150;
+    private float walkSpeed = 20;
 
     [SerializeField]
-    private Transform fpcam;    // first person camera
+    private Transform tpcam; //third person camera
+    private Camera topcam; //top view cam
 
-    // Start is called before the first frame update
+    [SerializeField]
+    TextMesh nick;
+
+    public PhotonMessageInfo info;
+
     void Start()
     {
-        // Cursor.lockState = CursorLockMode.Confined;
+        //Cursor.lockState = CursorLockMode.Confined;
+
+        if (photonView.IsMine && tpcam != null)
+        {
+            tpcam.GetComponent<Camera>().enabled = true;
+            nick.text = "";
+        }
+        else
+        {
+            tpcam.GetComponent<Camera>().enabled = false;
+            nick.text = photonView.Owner.NickName;
+        }
     }
 
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "Track")
+        {
+            transform.Translate(0, 1, 0);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
         if (photonView.IsMine)
         {
-            float forward = Input.GetAxis("Vertical");
-            float turn = Input.GetAxis("Horizontal") + Input.GetAxis("Mouse X");
-            float tilt = Input.GetAxis("Mouse Y");
-            transform.Translate(new Vector3(0, 0, forward * walkSpeed * Time.deltaTime));
+            float turn = Input.GetAxis("Horizontal");
+            transform.Translate(new Vector3(0, 0, 1 * walkSpeed * Time.deltaTime));
             transform.Rotate(new Vector3(0, turn * turnSpeed * Time.deltaTime, 0));
-            if (fpcam != null)
-                fpcam.Rotate(new Vector3(-tilt * tiltSpeed * Time.deltaTime, 0));
+
         }
+
+        if (Camera.current != null)
+        {
+            nick.transform.LookAt(Camera.current.transform);
+            nick.transform.Rotate(0, 180, 0);
+        }
+
     }
 }
