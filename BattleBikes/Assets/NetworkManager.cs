@@ -31,6 +31,41 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             PhotonNetwork.ConnectUsingSettings();
         }
     }
+    public void Play()
+    {
+        PlayerPrefs.SetString("PlayerName", playerName.text);
+        PhotonNetwork.NickName = playerName.text;
+        PhotonNetwork.JoinRandomRoom();
+        main.gameObject.SetActive(false);
+        //gameStarted = true;
+    }
+
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        CreateRoom();
+    }
+
+    void CreateRoom()
+    {
+        Debug.Log("Creating new room...");
+
+        int randRoomNum = Random.Range(0, 10000); //random name for room
+        RoomOptions roomOps = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = (byte)maxPlayersPerRoom };
+        PhotonNetwork.CreateRoom("BB" + randRoomNum, roomOps); // failed to join a random room, so create a new one
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        Debug.Log("Failed to create a room... trying again...");
+        CreateRoom();
+    }
+
+    public void Leave()
+    {
+        PhotonNetwork.LeaveRoom();
+        //gameStarted = false;
+        main.gameObject.SetActive(true);
+    }
 
     public override void OnConnectedToMaster()
     {
@@ -41,14 +76,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         buttonLeave.gameObject.SetActive(false);
         //Play();
         playerName.text = PlayerPrefs.GetString("PlayerName");
-    }
-
-    public override void OnJoinRandomFailed(short returnCode, string message)
-    {
-        Debug.Log("Oops, tried to join a room and failed. Calling CreateRoom!");
-
-        // failed to join a random room, so create a new one
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
     }
 
     public override void OnJoinedRoom()
@@ -88,21 +115,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             nickname.text = room.text = players.text = "";
     }
 
-    public void Play()
-    {
-        PlayerPrefs.SetString("PlayerName", playerName.text);
-        PhotonNetwork.NickName = playerName.text;
-        PhotonNetwork.JoinRandomRoom();
-        main.gameObject.SetActive(false);
-        //gameStarted = true;
-}
-
-    public void Leave()
-    {
-        PhotonNetwork.LeaveRoom();
-        //gameStarted = false;
-        main.gameObject.SetActive(true);
-    }
+    
 
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {

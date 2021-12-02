@@ -4,7 +4,6 @@ ScriptsOnlyBuild:
     - NetworkManager
     - PlayerController
     - SpawnTrack
-    - Test
     PhotonUnityNetworking.Demos.dll:
     - Photon.Pun.Demo.Asteroids.Asteroid
     - Photon.Pun.Demo.Asteroids.Bullet
@@ -90,69 +89,67 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1510}
+      Script: {instanceID: 1518}
     - Class: 114
-      Script: {instanceID: 1512}
+      Script: {instanceID: 1520}
     - Class: 114
-      Script: {instanceID: 1622}
+      Script: {instanceID: 1610}
     - Class: 114
-      Script: {instanceID: 1770}
+      Script: {instanceID: 1758}
     - Class: 114
-      Script: {instanceID: 2148}
+      Script: {instanceID: 2136}
     - Class: 114
-      Script: {instanceID: 2578}
+      Script: {instanceID: 2566}
     - Class: 114
-      Script: {instanceID: 2654}
+      Script: {instanceID: 2642}
     - Class: 114
-      Script: {instanceID: 2786}
+      Script: {instanceID: 2774}
     - Class: 114
-      Script: {instanceID: 2830}
+      Script: {instanceID: 2818}
     - Class: 114
-      Script: {instanceID: 2986}
+      Script: {instanceID: 2974}
     - Class: 114
-      Script: {instanceID: 3012}
+      Script: {instanceID: 3056}
     - Class: 114
-      Script: {instanceID: 3068}
+      Script: {instanceID: 3640}
     - Class: 114
-      Script: {instanceID: 3652}
+      Script: {instanceID: 3768}
     - Class: 114
-      Script: {instanceID: 3780}
+      Script: {instanceID: 3770}
     - Class: 114
-      Script: {instanceID: 3782}
+      Script: {instanceID: 3930}
     - Class: 114
-      Script: {instanceID: 3942}
+      Script: {instanceID: 4062}
     - Class: 114
-      Script: {instanceID: 4074}
+      Script: {instanceID: 4306}
     - Class: 114
-      Script: {instanceID: 4318}
+      Script: {instanceID: 4922}
     - Class: 114
-      Script: {instanceID: 4934}
+      Script: {instanceID: 4946}
     - Class: 114
-      Script: {instanceID: 4958}
+      Script: {instanceID: 5004}
     - Class: 114
-      Script: {instanceID: 5016}
+      Script: {instanceID: 5352}
     - Class: 114
-      Script: {instanceID: 5364}
+      Script: {instanceID: 5392}
     - Class: 114
-      Script: {instanceID: 5404}
+      Script: {instanceID: 5570}
     - Class: 114
-      Script: {instanceID: 5582}
+      Script: {instanceID: 6028}
     - Class: 114
-      Script: {instanceID: 6040}
+      Script: {instanceID: 6036}
     - Class: 114
-      Script: {instanceID: 6048}
+      Script: {instanceID: 6606}
     - Class: 114
-      Script: {instanceID: 6618}
+      Script: {instanceID: 7088}
     - Class: 114
-      Script: {instanceID: 7100}
+      Script: {instanceID: 7440}
     - Class: 114
-      Script: {instanceID: 7452}
+      Script: {instanceID: 7562}
     - Class: 114
-      Script: {instanceID: 7574}
+      Script: {instanceID: 7662}
     - Class: 114
-      Script: {instanceID: 7674}
-    - Class: 114
-      Script: {instanceID: 7858}
+      Script: {instanceID: 7846}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1790,7 +1787,7 @@ ScriptsOnlyBuild:
     className: PunTurnManager
   - hash:
       serializedVersion: 2
-      Hash: dc365fff7d12f1729b36aae3c5b4d9b4
+      Hash: be98e6b9309b71148b420e9b08956032
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerController
@@ -1875,4 +1872,5 @@ ScriptsOnlyBuild:
   platform: 19
   scenePathNames:
   - Assets/Scenes/BattleBikes.unity
-  playerPath: D:/battlebikes(rebuild)/BattleBikes/Demo Build/BattleBikes.exe
+  playerPath: C:/Users/Nyu/C Drive Stuff/Documents/Uno/Y3/Multiplayer and Games Console
+    Programming/battlebikes/BattleBikes/Builds/BattleBikes.exe
