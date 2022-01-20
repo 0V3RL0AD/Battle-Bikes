@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Track
+  - Walls
   layers:
   - Default
   - TransparentFX

@@ -335,8 +335,6 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/VSSettingsProvider.ref.dll"
-"Assets/MeshGenerator.cs"
-"Assets/My Robot Kyle/KylePlayerManager.cs"
 "Assets/NetworkManager.cs"
 "Assets/Photon/PhotonChat/Demos/Common/EventSystemSpawner.cs"
 "Assets/Photon/PhotonChat/Demos/Common/OnStartDelete.cs"
@@ -353,8 +351,9 @@
 "Assets/Photon/PhotonLibs/WebSocket/WebSocket.cs"
 "Assets/Photon/PhotonRealtime/Demos/DemoLoadBalancing/ConnectAndJoinRandomLb.cs"
 "Assets/PlayerController.cs"
+"Assets/ScrollTexture.cs"
+"Assets/SpawnPoints.cs"
 "Assets/SpawnTrack.cs"
-"Assets/Test.cs"
 -langversion:8.0
 
 /deterministic

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
@@ -14,9 +15,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField]
     private InputField playerName;
     [SerializeField]
-    private byte maxPlayersPerRoom = 8;
+    private byte maxPlayersPerRoom = 4;
     public GameObject player;
     public Camera main;
+    public AudioSource menuMusic, gameMusic;
+
+    Player[] allPlayers;
+    int myNumber;
     //public bool gameStarted;
 
     // Start is called before the first frame update
@@ -26,6 +31,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         buttonPlay.gameObject.SetActive(false);
         buttonLeave.gameObject.SetActive(false);
         playerName.gameObject.SetActive(false);
+        gameMusic.Stop();
+        menuMusic.Play();
         if (!PhotonNetwork.IsConnected)
         {
             PhotonNetwork.ConnectUsingSettings();
@@ -50,7 +57,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Debug.Log("Creating new room...");
 
         int randRoomNum = Random.Range(0, 10000); //random name for room
-        RoomOptions roomOps = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = (byte)maxPlayersPerRoom };
+        RoomOptions roomOps = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = (byte)maxPlayersPerRoom, CleanupCacheOnLeave = true };
         PhotonNetwork.CreateRoom("BB" + randRoomNum, roomOps); // failed to join a random room, so create a new one
     }
 
@@ -63,8 +70,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void Leave()
     {
         PhotonNetwork.LeaveRoom();
-        //gameStarted = false;
-        main.gameObject.SetActive(true);
+        SceneManager.LoadScene("BattleBikes");
     }
 
     public override void OnConnectedToMaster()
@@ -85,13 +91,19 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         buttonPlay.gameObject.SetActive(false);
         playerName.gameObject.SetActive(false);
         buttonLeave.gameObject.SetActive(true);
+        menuMusic.Stop();
+        gameMusic.Play();
+        allPlayers = PhotonNetwork.PlayerList;
+        foreach(Player p in allPlayers)
+        {
+            if(p!= PhotonNetwork.LocalPlayer)
+            {
+                myNumber++;
+            }
+        }
         PhotonNetwork.Instantiate(player.name,
-             new Vector3(Random.Range(-80, 80), 1, Random.Range(-80, 80)),
-             Quaternion.Euler(0, Random.Range(-180, 180), 0)
-             , 0);
+             SpawnPoints.instance.spawnPoints[myNumber].position, SpawnPoints.instance.spawnPoints[myNumber].rotation);
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (PhotonNetwork.InRoom)

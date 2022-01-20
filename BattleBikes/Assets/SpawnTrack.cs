@@ -4,29 +4,38 @@ using UnityEngine;
 
 public class SpawnTrack : MonoBehaviour
 {
-    public float spawnTime = 1, spawnDelay = 0;
+    public static SpawnTrack instance;
+
+    private float spawnTime = 0.02f, beamTimer = 0;
+    public bool dead;
     public GameObject player, beam;
 
     // Start is called before the first frame update
     void Start()
     {
+        dead = true;
+        instance = this;
     }
     // Update is called once per frame
     private void Update()
     {
-        if (Time.time > spawnTime)
+        if (dead == false)
         {
-            spawnTime = Time.time + spawnDelay;
-            SpawnBeam();
+            beamTimer += Time.deltaTime;
+            if (beamTimer >= spawnTime)
+            {
+                SpawnBeam();
+                beamTimer = 0;
+            }
         }
     }
 
     void SpawnBeam()
     {
-        Vector3 pos = player.transform.position;
-        Quaternion rot = player.transform.rotation;
-        GameObject clone = Instantiate(beam, pos, rot);
+            Vector3 pos = player.transform.position;
+            Quaternion rot = player.transform.rotation;
+            GameObject clone = Instantiate(beam, pos, rot);
 
-        Destroy(clone, 15.0f);
+            Destroy(clone, 8.0f);
     }
 }
