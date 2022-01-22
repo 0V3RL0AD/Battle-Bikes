@@ -40,6 +40,16 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - ChangeColorTo
+  - SpawnBeam
+  - IsDead
+  - SendChat
+  - ScoreboardUpdate
+  - InitScoreboard
+  - SyncScoreboard
+  - AddScore
+  - StartGame
+  - LosePoints
+  - LosePints
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

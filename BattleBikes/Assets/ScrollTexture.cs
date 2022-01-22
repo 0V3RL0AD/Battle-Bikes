@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class ScrollTexture : MonoBehaviour
+public class ScrollTexture : MonoBehaviourPun
 {
     public float ScrollX = 0.5f;
     public float ScrollY = 0.5f;

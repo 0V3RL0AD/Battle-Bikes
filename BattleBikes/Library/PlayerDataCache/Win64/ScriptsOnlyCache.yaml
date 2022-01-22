@@ -1,11 +1,11 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - ColourPicker
     - NetworkManager
     - PlayerController
     - ScrollTexture
     - SpawnPoints
-    - SpawnTrack
     PhotonUnityNetworking.Demos.dll:
     - Photon.Pun.Demo.Asteroids.Asteroid
     - Photon.Pun.Demo.Asteroids.Bullet
@@ -31,6 +31,12 @@ ScriptsOnlyBuild:
     - TMPro.TMP_Settings
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
+    UnityEditor.Graphs.dll:
+    - UnityEditor.Graphs.AnimationBlendTree.Graph
+    - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.Graph
+    - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -41,6 +47,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
+    - UnityEngine.UI.GridLayoutGroup
     - UnityEngine.UI.Image
     - UnityEngine.UI.InputField
     - UnityEngine.UI.Shadow
@@ -82,8 +89,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 83
       Script: {instanceID: 0}
-    - Class: 89
-      Script: {instanceID: 0}
     - Class: 90
       Script: {instanceID: 0}
     - Class: 91
@@ -121,8 +126,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3058}
     - Class: 114
-      Script: {instanceID: 3642}
-    - Class: 114
       Script: {instanceID: 3770}
     - Class: 114
       Script: {instanceID: 3772}
@@ -133,33 +136,37 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 4308}
     - Class: 114
+      Script: {instanceID: 4676}
+    - Class: 114
       Script: {instanceID: 4922}
     - Class: 114
       Script: {instanceID: 4946}
     - Class: 114
       Script: {instanceID: 5004}
     - Class: 114
-      Script: {instanceID: 5352}
+      Script: {instanceID: 5350}
     - Class: 114
-      Script: {instanceID: 5392}
+      Script: {instanceID: 5390}
     - Class: 114
-      Script: {instanceID: 5570}
+      Script: {instanceID: 5568}
     - Class: 114
-      Script: {instanceID: 6028}
+      Script: {instanceID: 6026}
     - Class: 114
-      Script: {instanceID: 6036}
+      Script: {instanceID: 6034}
     - Class: 114
-      Script: {instanceID: 6364}
+      Script: {instanceID: 6362}
     - Class: 114
-      Script: {instanceID: 6608}
+      Script: {instanceID: 6606}
     - Class: 114
-      Script: {instanceID: 7090}
+      Script: {instanceID: 7088}
     - Class: 114
-      Script: {instanceID: 7442}
+      Script: {instanceID: 7440}
     - Class: 114
-      Script: {instanceID: 7564}
+      Script: {instanceID: 7562}
     - Class: 114
-      Script: {instanceID: 7664}
+      Script: {instanceID: 7662}
+    - Class: 114
+      Script: {instanceID: 7762}
     - Class: 114
       Script: {instanceID: 7848}
     - Class: 115
@@ -505,7 +512,7 @@ ScriptsOnlyBuild:
     className: UnityMessageListener
   - hash:
       serializedVersion: 2
-      Hash: e8d7b4a51868ca6eba8cfe71dc4a355d
+      Hash: 4eadc519ff73d149ef48df5eebd10358
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: NetworkManager
@@ -767,12 +774,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Flow.dll
     namespaceName: Unity.VisualScripting
     className: ScriptGraphAsset
-  - hash:
-      serializedVersion: 2
-      Hash: 32a063efe622ee302edfe7b04806d6b8
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: SpawnTrack
   - hash:
       serializedVersion: 2
       Hash: cba6cca6bb3290c4c00d709cf63843db
@@ -1223,12 +1224,6 @@ ScriptsOnlyBuild:
     assemblyName: PhotonUnityNetworking.Utilities.dll
     namespaceName: Photon.Pun.UtilityScripts
     className: PunPlayerScores
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: KylePlayerManager
   - hash:
       serializedVersion: 2
       Hash: f8f5c34557f4103b6547d8f956cec6ea
@@ -1807,7 +1802,7 @@ ScriptsOnlyBuild:
     className: PunTurnManager
   - hash:
       serializedVersion: 2
-      Hash: 786e7bab9757e7160ab9951c57d7db0f
+      Hash: ce8a838b8ffac81b22c077ae68f84216
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerController
@@ -1841,6 +1836,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnToggleValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 965d02cb5b3d0a52ca26573e7b6e7fb0
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ColourPicker
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f

@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 
 public class PlayerController : MonoBehaviourPun
 {
     private float turnSpeed = 100;
-    private float walkSpeed = 40;
+    private float walkSpeed = 30;
+
+    private float spawnTime = 0.02f, beamTimer = 0;
+    public bool dead = true;
+    public GameObject player, beam, deadEffect;
     public MeshRenderer bike;
 
     [SerializeField]
-    private Transform tpcam, deadcam; //third person camera
+    private Transform tpcam; //third person camera
 
     [SerializeField]
     TextMesh nick;
@@ -19,10 +24,6 @@ public class PlayerController : MonoBehaviourPun
 
     void Start()
     {
-        //Cursor.lockState = CursorLockMode.Locked;
-
-        ChangeColorTo(new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)));
-
         if (photonView.IsMine && tpcam != null)
         {
             tpcam.GetComponent<Camera>().enabled = true;
@@ -33,36 +34,62 @@ public class PlayerController : MonoBehaviourPun
             tpcam.GetComponent<Camera>().enabled = false;
             nick.text = photonView.Owner.NickName;
         }
-
-        StartCoroutine(SpawnInvinc(0.4f));
-
-
     }
 
     void OnTriggerEnter(Collider col)
     {
-        if (SpawnTrack.instance.dead == false)
-        { 
+        if (dead == false)
+        {
             if (col.gameObject.CompareTag("Track") || col.gameObject.CompareTag("Walls"))
             {
-                IsDead();
+                if (photonView.IsMine)
+                {
+                    photonView.RPC("LosePoints", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1);
+                    IsDead();
+                }
+
             }
         }
     }
 
-    void IsDead()
+    [PunRPC] void LosePoints(int player)
     {
-        SpawnTrack.instance.dead = true;
+        if (player == 0)
+        {
+            NetworkManager.instance.playerScores[0]--;
+        }
+        if (player == 1)
+        {
+            NetworkManager.instance.playerScores[1]--;
+        }
+        if (player == 2)
+        {
+            NetworkManager.instance.playerScores[2]--;
+        }
+        if (player == 3)
+        {
+            NetworkManager.instance.playerScores[3]--;
+        }
+    }
+    [PunRPC] void IsDead()
+    {
+        dead = true;
         turnSpeed = 0;
         walkSpeed = 0;
         bike.enabled = false;
-        StartCoroutine(RespawnTime(2));
-        StartCoroutine(SpawnInvinc(2.4f));
+        deadEffect.SetActive(true);
+
+        StartCoroutine(RespawnTime());
+
+        if (photonView.IsMine)
+        {
+            photonView.RPC("IsDead", RpcTarget.Others);
+        }
     }
 
-    IEnumerator RespawnTime(float time1)
+    IEnumerator RespawnTime()
     {
-        yield return new WaitForSeconds(time1);
+        yield return new WaitForSeconds(2f);
 
         int temp = Random.Range(0, 8);
         transform.position = SpawnPoints.instance.spawnPoints[temp].position;
@@ -70,45 +97,61 @@ public class PlayerController : MonoBehaviourPun
         turnSpeed = 100;
         walkSpeed = 40;
         bike.enabled = true;
-    }
-    IEnumerator SpawnInvinc(float time2)
-    {
-        yield return new WaitForSeconds(time2);
 
-        SpawnTrack.instance.dead = false;
+        yield return new WaitForSeconds(2.5f);
+
+        dead = false;
+        deadEffect.SetActive(false);
     }
+
     // Update is called once per frame
     void Update()
     {
-
         if (photonView.IsMine)
         {
             float turn = Input.GetAxis("Horizontal");
             transform.Translate(new Vector3(0, 0, -1 * walkSpeed * Time.deltaTime));
             transform.Rotate(new Vector3(0, turn * turnSpeed * Time.deltaTime, 0));
+
+            ChangeColorTo(new Vector3(ColourPicker.instance.bikeColor.x, ColourPicker.instance.bikeColor.y, ColourPicker.instance.bikeColor.z));
+
+            if (dead == false)
+            {
+                if (Input.GetKey(KeyCode.W))
+                {
+                    walkSpeed = 40;
+                }
+                else if (Input.GetKey(KeyCode.S))
+                {
+                    walkSpeed = 20;
+                }
+                else
+                {
+                    walkSpeed = 30;
+                }
+            }
         }
 
-        if (Camera.current != null)
+        if (dead == false)
+        {
+            beamTimer += Time.deltaTime;
+             if (beamTimer >= spawnTime)
+             {
+                 Vector3 pos = player.transform.position;
+                 Quaternion rot = player.transform.rotation;
+
+                 GameObject clone = Instantiate(beam, pos, rot);
+                 Destroy(clone, 8.0f);
+
+                 beamTimer = 0;
+             }
+        }
+            if (Camera.current != null)
         {
             nick.transform.LookAt(Camera.current.transform);
             nick.transform.Rotate(0, 180, 0);
         }
 
-        if (SpawnTrack.instance.dead == false)
-        {
-            if (Input.GetKey(KeyCode.W))
-            {
-                walkSpeed = 60;
-            }
-            else if (Input.GetKey(KeyCode.S))
-            {
-                walkSpeed = 20;
-            }
-            else
-            {
-                walkSpeed = 40;
-            }
-        }
     }
 
     [PunRPC] void ChangeColorTo(Vector3 color)
