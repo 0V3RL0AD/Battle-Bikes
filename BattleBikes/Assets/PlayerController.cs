@@ -54,21 +54,12 @@ public class PlayerController : MonoBehaviourPun
 
     [PunRPC] void LosePoints(int player)
     {
-        if (player == 0)
+        for (int i = 0; i < 4; i++)
         {
-            NetworkManager.instance.playerScores[0]--;
-        }
-        if (player == 1)
-        {
-            NetworkManager.instance.playerScores[1]--;
-        }
-        if (player == 2)
-        {
-            NetworkManager.instance.playerScores[2]--;
-        }
-        if (player == 3)
-        {
-            NetworkManager.instance.playerScores[3]--;
+            if (player == i)
+            {
+                NetworkManager.instance.playerScores[i]--;
+            }
         }
     }
     [PunRPC] void IsDead()
@@ -98,7 +89,7 @@ public class PlayerController : MonoBehaviourPun
         walkSpeed = 40;
         bike.enabled = true;
 
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(0.5f);
 
         dead = false;
         deadEffect.SetActive(false);
